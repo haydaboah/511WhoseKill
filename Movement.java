@@ -260,7 +260,7 @@ public class Movement {
 								
 			Map.Update_Map(hotel);
 			
-			if(currRoom.crime || currRoom.hasNPC )
+			if(currRoom.crime || currRoom.hasNPC || (currRoom.isPublic && !currRoom.isLobby))
 			{
 				break;
 			}
