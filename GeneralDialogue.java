@@ -67,9 +67,9 @@ public class GeneralDialogue {
         }
     }
 
-    public String witness(Boolean isWitness, String secondEvRoom, String murdRoom) {
+    public String witness(Boolean isWitness, String secondEvRoom) {
         if (isWitness == true) {
-            String reply = "\"I saw someone running toward " + secondEvRoom + " just before the body was found. They seemed to be running from the " + murdRoom + ".\"";
+            String reply = "\"I saw someone running toward " + secondEvRoom + " just before the body was found. They seemed to be running from the crime room.\"";
             return reply;
         } else {
             String reply0 = "\"No, I can\'t say I have.\"";
