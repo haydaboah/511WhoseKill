@@ -163,7 +163,7 @@ public class HotelManager {
 
     //method for the result of the accusation (true/false)
     public String postAccusation(boolean accusation) {
-        String r5 = "\"Swell job, Detective! I wasn\'t confident you\'d be able to pull this off, but you\'1ve brought a criminal to justice and peace of mind to my humble hotel. Well done!\"";
+        String r5 = "\"Swell job, Detective! I wasn\'t confident you\'d be able to pull this off, but you\'ve brought a criminal to justice and peace of mind to my humble hotel. Well done!\"";
         String r6 = "\"I suppose this is my fault. Mom always said I was a bad judge of character. Thank you for your services, Detective, but I think I\'ll be looking elsewhere for help from now on.\"";
 
         if (accusation == true) {
