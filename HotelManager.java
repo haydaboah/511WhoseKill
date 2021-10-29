@@ -156,15 +156,15 @@ public class HotelManager {
     }
 
     //method for making an accusation
-    public String makeAccusation(String charName, String susGuess, String susChar) {
-        String r4 = "\"Oh. God. Okay. Are you sure? I’ll meet you at the " + charName +"'s room. If they really did do it, then they must have evidence of the murder on their person. I can have security guards wait outside to help you with the arrest.\"\n\nThe anxious Manager disappears through a door behind the front desk.";
+    public String makeAccusation(String charName) {
+        String r4 = "\"Oh. God. Okay. Are you sure? I\'ll meet you at the " + charName +"\'s room. If they really did do it, then they must have evidence of the murder on their person. I can have security guards wait outside to help you with the arrest.\"\n\nThe anxious Manager disappears through a door behind the front desk.";
         return r4;
     }
 
     //method for the result of the accusation (true/false)
     public String postAccusation(boolean accusation) {
-        String r5 = "\"Swell job, Detective! I wasn’t confident you’d be able to pull this off, but you’ve brought a criminal to justice and peace of mind to my humble hotel. Well done!\"";
-        String r6 = "\"I suppose this is my fault. Mom always said I was a bad judge of character. Thank you for your services, Detective, but I think I’ll be looking elsewhere for help from now on.\"";
+        String r5 = "\"Swell job, Detective! I wasn\'t confident you\'d be able to pull this off, but you\'1ve brought a criminal to justice and peace of mind to my humble hotel. Well done!\"";
+        String r6 = "\"I suppose this is my fault. Mom always said I was a bad judge of character. Thank you for your services, Detective, but I think I\'ll be looking elsewhere for help from now on.\"";
 
         if (accusation == true) {
             return r5;
