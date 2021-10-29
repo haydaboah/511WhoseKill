@@ -58,16 +58,16 @@ public class Driver {
             //Room Assignment for Chef and Maid
             Hotel hotel = new Hotel();
             chef.setRoom(hotel.K1);                     //chef located in kitchen
-            hotel.K1.setNPC(chef);                     //double bond
+            hotel.K1.setNPC(chef);                      //double bond
             hotel.K1.setHasNPC(true);                   //kitchen now has NPC
             int clos = rand.nextInt(2);
             if (clos == 0) {
                 maid.setRoom(hotel.C1);                 //maid located in closet 1
-                hotel.C1.setNPC(maid);                 //double bond
+                hotel.C1.setNPC(maid);                  //double bond
                 hotel.C1.setHasNPC(true);               //clost1 has NPC
             } else {                                    //or
                 maid.setRoom(hotel.C2);                 //maid located in closet 2
-                hotel.C2.setNPC(maid);                 //double bond
+                hotel.C2.setNPC(maid);                  //double bond
                 hotel.C2.setHasNPC(true);               //clost2 has NPC
             }
 
@@ -85,6 +85,13 @@ public class Driver {
             Collections.shuffle(Arrays.asList(susCombo));       //Shuffle list of suspect combo
             Collections.shuffle(Arrays.asList(pubRooms));       //Shuffle list of public rooms
             privRooms[0].crime = true;                          //1st privRoom assigned crime
+            for (int i = 0; i < 3; i++) {                       //Array Swap for loop
+                if (susCombo[i] == Evidence.ROOM_KEY) {         //If the Room Key is in sus combo
+                    Evidence temp = susCombo[0];                // -> swap first element with Room Key
+                    susCombo[0] = susCombo[i];
+                    susCombo[i] = temp;
+                }
+            }
             privRooms[0].Set_Overall_Text(coDeath.toString().toLowerCase());
             privRooms[0].Set_Evidence(susCombo[0]);             //evidence planted in 1st privRoom
             privRooms[0].setHasEvidence(true);                  //1st privRoom has evidence
@@ -109,8 +116,8 @@ public class Driver {
         Movement mov = new Movement(hotel);
 
         //Dialogue Handlers
-        HotelManagerHandler hmh = new HotelManagerHandler(characters);
-        GeneralDialogueHandler gdh = new GeneralDialogueHandler(characters);
+        HotelManagerHandler hmh = new HotelManagerHandler(characters, player, characters[sus]);
+        GeneralDialogueHandler gdh = new GeneralDialogueHandler(characters, pubRooms[0]);
         Search search = new Search(player);
 
         int choice; //choices in loop
@@ -128,17 +135,23 @@ public class Driver {
                 thisLevel = true;
 
                 while (thisLevel == true) {
+                    System.out.println();
                     System.out.println("(1) Talk to Coroner | (2) Search | (3) Exit Room");
                     choice = scan.nextInt();
 
                     if (choice == 1) {
+                        System.out.println();
                         System.out.println(coroner.greeting());
                         System.out.println();
+                        System.out.println();
                         System.out.println(coroner.coronerInteraction());
+                        System.out.println();
                     }
 
                     if (choice == 2) {
+                        System.out.println();
                         search.initiate(mov.CurrentLocation());
+                        System.out.println();
                     }
 
                     if (choice == 3) {
@@ -151,15 +164,20 @@ public class Driver {
                 thisLevel = true;
 
                 while (thisLevel == true) {
+                    System.out.println();
                     System.out.println("(1) Talk to " + mov.CurrentLocation().getNPC().getCharName() + " | (2) Search | (3) Exit Room");
                     choice = scan.nextInt();
 
                     if (choice == 1) {
-                        gdh.initiate();
+                        System.out.println();
+                        gdh.initiate(mov.CurrentLocation().npc.getIsWitness());
+                        System.out.println();
                     }
 
                     if (choice == 2) {
+                        System.out.println();
                         search.initiate(mov.CurrentLocation());
+                        System.out.println();
                     }
 
                     if (choice == 3) {
@@ -169,12 +187,74 @@ public class Driver {
                 }
 
             } else if (mov.CurrentLocation().isLobby) { //If the current room is the lobby
-                
-                System.out.println("(1) Talk to Hotel Manager | (2) Search | (3) Exit Room");
+                thisLevel = true;
+                while (thisLevel == true) {
+                    System.out.println();
+                    System.out.println("(1) Talk to Hotel Manager | (2) Search | (3) Stop Lingering");
+                    choice = scan.nextInt();
 
+                    if (choice == 1) {
+                        System.out.println();
+                        hmh.initiate();
+                        System.out.println();
+                    }
+
+                    if (choice == 2) {
+                        System.out.println();
+                        search.initiate(mov.CurrentLocation());
+                        System.out.println();
+                    }
+
+                    if (choice == 3) {
+                        thisLevel = false;
+                    }
+
+                    if (player.getGameOver() == true)
+                        break;
+                }
+        
+            } else if (mov.CurrentLocation().isPublic) {
+                thisLevel = true;
+                while (thisLevel == true) {
+                    System.out.println("(1) Call out | (2) Search | (3) Exit Room");
+                    choice = scan.nextInt();
+
+                    if (choice == 1) {
+                        System.out.println();
+                        System.out.println("No one seems to acknowledge you.");
+                        System.out.println();
+                    }
+
+                    if (choice == 2) {
+                        System.out.println();
+                        search.initiate(mov.CurrentLocation());
+                        System.out.println();
+                    }
+
+                    if (choice == 3) {
+                        thisLevel = false;
+                    }                    
+                }
             } else {
                 mov.Set_Loc(mov.loc[0],1);
             }
+
+            if (player.getGameOver() == true)
+                endGame = true;
+        }
+
+        if (player.getCorrectAccusation() == true) {
+            System.out.println("******************************");
+            System.out.println("*                            *");
+            System.out.println("*         YOU WIN!!!         *");
+            System.out.println("*                            *");
+            System.out.println("******************************");
+        } else {
+            System.out.println("******************************");
+            System.out.println("*                            *");
+            System.out.println("*         YOU LOSE!!!        *");
+            System.out.println("*                            *");
+            System.out.println("******************************");
         }
 
         // while (endGame == false) {
