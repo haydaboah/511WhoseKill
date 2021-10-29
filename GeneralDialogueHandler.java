@@ -7,10 +7,12 @@ public class GeneralDialogueHandler {
     private boolean isWitness; //This will need to be implemented
     private int choice;
     private NPC[] characters;
+    private Room pubRoom;
 
-    public GeneralDialogueHandler(NPC[] characters) {
+    public GeneralDialogueHandler(NPC[] characters, Room pubRoom) {
         scan = new Scanner(System.in);
         this.characters = characters;
+        this.pubRoom = pubRoom;
         
         //Dialogue Parameters:
         //String chef, String maid, String goon, String dancer, String senator, String imperialist
@@ -19,7 +21,8 @@ public class GeneralDialogueHandler {
         choice = 0;
     }
 
-    public void initiate() {
+    public void initiate(boolean isWitness) {
+        this.isWitness = isWitness;
         level1(true); //starting isWitness as true
     }
 
@@ -50,7 +53,7 @@ public class GeneralDialogueHandler {
                         }
 
                         if (choice == 4) {
-                            System.out.println(di.witness(isWitness, "ENTER SECOND EVIDENCE ROOM", "ENTER MURDER ROOM"));
+                            System.out.println(di.witness(isWitness, pubRoom.room_name));
                         }
 
                         if(choice == 5) {
