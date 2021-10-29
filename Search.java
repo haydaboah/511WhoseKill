@@ -1,5 +1,7 @@
 import java.util.*;
 
+import javax.lang.model.util.ElementScanner14;
+
 //Cases for searching
 //1)No Evidence has been found (firstEvidence = false)
 //  -> IF the current room is the crime room, SEARCH
@@ -29,9 +31,9 @@ public class Search {
 
     //Constructor(takes in player object)
     public Search(Player player) {
-        ed = new EvidenceDialogue();
-        scan = new Scanner(System.in);
         this.player = player;
+        ed = new EvidenceDialogue(player);
+        scan = new Scanner(System.in);
         choice = 0;
     }
 
@@ -57,25 +59,31 @@ public class Search {
         if (room.crime == true) {
             searchFirstEvidence(true);
         } else {
+            System.out.println();
             System.out.println(ed.nothing());
+            System.out.println();
         }
     }
 
     //If player has not found the second evidence
     public void noSecondEvidence() {
         if (room.isPublic && room.hasEvidence) {
-            searchSecondEvidence();
+            searchSecondEvidence(true);
         } else {
+            System.out.println();
             System.out.println(ed.nothing());
+            System.out.println();
         }
     }
 
     //If player has not found the third evidence
     public void noThirdEvidence() {
         if (room.hasNPC) {
-            searchThirdEvidence();
+            searchThirdEvidence(true);
         } else {
+            System.out.println();
             System.out.println(ed.nothing());
+            System.out.println();
         }
     }
 
@@ -84,6 +92,7 @@ public class Search {
         while (stillSearching == true) {
             choice = 0;
 
+            System.out.println();
             System.out.println("(1) Search under the furniture");
             System.out.println("(2) Gaze around the room absentmindedly");
             System.out.println("(3) Examine the victim");
@@ -91,6 +100,7 @@ public class Search {
             System.out.println("(5) Scrutinize the floor");
             System.out.println("(6) Check the door");
             System.out.println("(7) Exit Search");
+            System.out.println();
 
             choice = scan.nextInt();
 
@@ -124,16 +134,102 @@ public class Search {
     }
 
     //Simulates search for the Second Evidence
-    public void searchSecondEvidence() {
+    public void searchSecondEvidence(boolean stillSearching) {
+        while (stillSearching == true) {
+            choice = 0;
+            System.out.println("(1) You notice something there...");
+            choice = scan.nextInt();
+            if (choice == 1) {
+                if (room.Evidence.equals(Evidence.ANTIQUE_WATCH)) {
+                    System.out.println();
+                    System.out.println(ed.pubAntiqueWatch());
+                    System.out.println();
+                    stillSearching = false;
+                }
+                if (room.Evidence.equals(Evidence.EMPTY_BILLFOLD)) {
+                    System.out.println();
+                    System.out.println(ed.pubEmptyBillfold());
+                    System.out.println();
+                    stillSearching = false;
+                }
+                if (room.Evidence.equals(Evidence.STRAY_HAIR)) {
+                    System.out.println();
+                    System.out.println(ed.pubStrayHair());
+                    System.out.println();
+                    stillSearching = false;
+                }
+                if (room.Evidence.equals(Evidence.HIP_FLASK)) {
+                    System.out.println();
+                    System.out.println(ed.pubHipFlask());
+                    System.out.println();
+                    stillSearching = false;
+                }
+                if (room.Evidence.equals(Evidence.CIGAR)) {
+                    System.out.println();
+                    System.out.println(ed.pubCigar());
+                    System.out.println();
+                    stillSearching = false;
+                }
+            } 
+        }
 
     }
 
     //Simulates search for the Third Evidence
-    public void searchThirdEvidence() {
-        if (room.npc.getIsSuspect()) {
+    public void searchThirdEvidence(boolean stillSearching) {
+        while (stillSearching == true) {
+            choice = 0;
 
-        } else {
+            System.out.println();
+            System.out.println("(1) Hurry the fuck up Winton");
+            System.out.println("(2) God damnit Winton");
+            System.out.println("(3) Jesus fucking Christ");
+            System.out.println("(4) Do you not have the fucking time?");
+            System.out.println("(5) Don't fuck this up Winton");
+            System.out.println("(6) Exit Search");
+            System.out.println();
 
+            choice = scan.nextInt();
+
+
+            switch (choice) {
+                case 1:
+                    if (ev != null) //fixxing NullPointerException error
+                        System.out.println(ed.privAntiqueWatch(ev.equals(Evidence.ANTIQUE_WATCH)));
+                    else 
+                        System.out.println(ed.privAntiqueWatch(false));
+                    break;
+                case 2:
+                    if (ev != null) //fixxing NullPointerException error
+                        System.out.println(ed.privEmptyBillfold(ev.equals(Evidence.EMPTY_BILLFOLD)));
+                    else 
+                        System.out.println(ed.privEmptyBillfold(false));
+                    break;
+                case 3:
+                    if (ev != null) //fixxing NullPointerException error
+                        System.out.println(ed.privStrayHair(ev.equals(Evidence.STRAY_HAIR)));
+                    else 
+                        System.out.println(ed.privStrayHair(false));
+                    break;
+                case 4:
+                    if (ev != null) //fixxing NullPointerException error
+                        System.out.println(ed.privHipFlask(ev.equals(Evidence.HIP_FLASK)));
+                    else  
+                        System.out.println(ed.privHipFlask(false));
+                    break;
+                case 5:
+                    if (ev != null) //fixxing NullPointerException error
+                        System.out.println(ed.privCigar(ev.equals(Evidence.CIGAR)));
+                    else 
+                        System.out.println(ed.privCigar(false));
+
+                    break;
+                case 6:
+                    stillSearching = false;
+                    break;
+                default:
+                    System.out.println("You continue standing.");
+            }
         }
     }
 }
