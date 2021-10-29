@@ -3,11 +3,15 @@ public class Player {
     private boolean firstEvidence;
     private boolean secondEvidence;
     private boolean thirdEvidence;
+    private boolean gameOver;
+    private boolean correctAccusation;
 
     public Player() {
         firstEvidence = false;
         secondEvidence = false;
         thirdEvidence = false;
+        gameOver = false;
+        correctAccusation = false;
     }
 
     public boolean getFirstEvidence() {
@@ -32,5 +36,21 @@ public class Player {
 
     public void setThirdEvidence(boolean thirdEvidence) {
         this.thirdEvidence = thirdEvidence;
+    }
+
+    public boolean getGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    } 
+
+    public boolean getCorrectAccusation() {
+        return correctAccusation;
+    }
+    
+    public void setCorrectAccusation(boolean correctAccusation) {
+        this.correctAccusation = correctAccusation;
     }
 }
