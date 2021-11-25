@@ -125,6 +125,9 @@ public class Driver {
         boolean endGame = false;  //while loop condition
         boolean thisLevel = false; //level while loop condition
 
+        String howMapWorks = "The series of H's in the middle is the hallway, you are free to roam it as you please and investigate its adjacent rooms. 'R' stands for a private bedroom, 'C' a closet, 'Rr' the restaurant, 'K' the kitchen, and 'B' the ballroom. Use the key to reference your current location, the crime location, and visited locations. Use the WASD keys and ENTER to navigate.";
+        System.out.println("\nYou are a detective hired to solve a murder at the Sierra Baker Hotel. The murderer is almost certainly someone already present at the location, either a guest or a staff member. Investigate the crime scene to discover evidence that connects one of the other people at the hotel to the crime. Be sure to carefully interview everyone you meet as they might know something about the other people - or even the evidence you find - that can help you in your investigation. When you are ready to make an accusation, visit the Hotel Manager in the lobby and inform him of your findings.\n\nThe box matrix will serve as your map. " + howMapWorks + "\n\nGood luck.\n");
+
         while (endGame == false) {
             choice = 0;
 
@@ -207,6 +210,7 @@ public class Driver {
 
                     if (choice == 3) {
                         thisLevel = false;
+                        mov.Set_Loc(mov.loc[0],1);
                     }
 
                     if (player.getGameOver() == true)
@@ -233,6 +237,7 @@ public class Driver {
 
                     if (choice == 3) {
                         thisLevel = false;
+                        mov.Set_Loc(mov.loc[0],1);
                     }                    
                 }
             } else {
